@@ -16,7 +16,7 @@ All persons accessible through API version 1 have to be accessible through API v
 * inmemory database
 * ORM not defined -> EF
 * versioning schema not defined -> URI & header
-* authentication is not defined
+* authentication is not defined -> no IdentityServer
 * authorization is not defined
 * SSL is not defined
 
