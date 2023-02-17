@@ -18,6 +18,7 @@ All persons accessible through API version 1 have to be accessible through API v
 * versioning schema not defined -> URI & header
 * authentication is not defined
 * authorization is not defined
+* SSL is not defined
 
 ## Akzeptanzkriterien
 
