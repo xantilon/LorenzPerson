@@ -12,9 +12,9 @@ public static class MvcServiceCollectionExtensions
             o.DefaultApiVersion = new ApiVersion(1, 0);
             o.ReportApiVersions = true;
             o.AssumeDefaultVersionWhenUnspecified = true;
-            o.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(),
+            o.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader()//,
                                                           //new HeaderApiVersionReader("x-api-version"),
-                                                          new MediaTypeApiVersionReader("v")
+                                                          //new MediaTypeApiVersionReader("v")
                                                           );
             o.ApiVersionSelector = new CurrentImplementationApiVersionSelector(o);
         });

@@ -1,4 +1,4 @@
-﻿using PersonApi.Helpers.Enums;
+﻿using PersonApi.Helpers.Enums.v1;
 
 namespace PersonApi.Data.DTOs.v1
 {

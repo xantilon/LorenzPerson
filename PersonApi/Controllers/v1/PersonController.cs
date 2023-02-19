@@ -8,7 +8,7 @@ namespace PersonApi.Controllers.v1
 {
     [ApiController]
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("v{version:apiVersion}/people")]
     public class PersonController : ControllerBase
     {
 
@@ -31,10 +31,14 @@ namespace PersonApi.Controllers.v1
         public ActionResult<IEnumerable<PersonDto>> Get()
         {
             List<PersonDto> ret = _db.People
+                .ToList()
+                .Where(p => p.CanDisplayInV1)
                 .Select(p => _personMapper.ToDto(p))
                 .ToList();
+
             if (!ret.Any())
                 return NotFound();
+
             return Ok(ret);
         }
 
@@ -44,10 +48,14 @@ namespace PersonApi.Controllers.v1
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            PersonDto? ret = _db.Set<Person>()
+            Person? p = _db.People
                 .Where(p => p.Id == id)
-                .Select(p => _personMapper.ToDto(p))
                 .FirstOrDefault();
+
+            PersonDto? ret = null;
+            if(p is not null && p.CanDisplayInV1) 
+                ret = _personMapper.ToDto(p);
+
             if (ret is null)
                 return NotFound();
             return Ok(ret);
@@ -73,12 +81,17 @@ namespace PersonApi.Controllers.v1
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            Person? entity = _db.People.FirstOrDefault(p => p.Id == person.Id);
-            if (entity is null)
+            Person? entity = _db.People
+                .FirstOrDefault(p => p.Id == person.Id);
+
+            if (entity is null || !entity.CanDisplayInV1)
                 return NotFound();
+            
             _personMapper.UpdateValues(person, ref entity);
+            
             if (_db.SaveChanges() > 0)
                 return Accepted(_personMapper.ToDto(entity));
+
             return BadRequest("person could not be updated");
         }
 
@@ -86,7 +99,7 @@ namespace PersonApi.Controllers.v1
         public ActionResult Delete(int id)
         {
             Person? entity = _db.People.FirstOrDefault(p => p.Id == id);
-            if (entity is null)
+            if (entity is null || !entity.CanDisplayInV1)
                 return NotFound();
 
             _db.People.Remove(entity);

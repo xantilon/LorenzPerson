@@ -1,0 +1,55 @@
+
+@version=2
+@url=https://localhost:7248/v{{version}}
+
+###
+GET {{url}}/people
+accept: application/json
+
+
+###
+POST {{url}}/people
+Content-Type: application/json
+
+{
+    "firstName": "Bruce",
+    "surName": "Wayne",
+    "gender": "diverse",
+    "birthday": "1973-01-29",
+    "city": "Gotham",
+    "country": "DC"
+}
+
+
+###
+POST {{url}}/people
+Content-Type: application/json
+
+{
+    "firstName": "Clark",
+    "surName": "Kent",
+    "gender": "diverse",
+    "birthday": "1973-01-29",
+    "city": "Smallville",
+    "country": "DC"
+}
+
+###
+PuT {{url}}/people
+Content-Type: application/json
+
+{
+    "id": 11,
+    "firstName": "Batman",
+    "surName": "Wayne",
+    "gender": "male",
+    "birthday": "1973-01-29"
+}
+
+
+### 
+DELETE {{url}}/people/13
+accept: application/json
+
+
+

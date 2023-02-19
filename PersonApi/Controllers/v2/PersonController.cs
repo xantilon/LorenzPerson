@@ -8,7 +8,7 @@ namespace PersonApi.Controllers.v2
 {
     [ApiController]
     [ApiVersion("2")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("v{version:apiVersion}/people")]
     public class PersonController : ControllerBase
     {
 

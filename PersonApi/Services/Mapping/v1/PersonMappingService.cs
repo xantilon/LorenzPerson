@@ -1,5 +1,6 @@
 ﻿using PersonApi.Data.DTOs.v1;
 using PersonApi.Data.Models;
+using PersonApi.Helpers.Enums.v1;
 
 namespace PersonApi.Services.Mapping.v1
 {
@@ -11,7 +12,7 @@ namespace PersonApi.Services.Mapping.v1
                 person.Id,
                 person.FirstName,
                 person.SurName,
-                person.Gender,
+                (eGender)(int)person.Gender,
                 new DateOnly(person.Birthday.Year, person.Birthday.Month, person.Birthday.Day)
             );
         }
@@ -23,7 +24,7 @@ namespace PersonApi.Services.Mapping.v1
                 Id = dto.Id,
                 FirstName = dto.FirstName,
                 SurName = dto.SurName,
-                Gender = dto.Gender,
+                Gender = (Helpers.Enums.v2.eGender)(int)dto.Gender,
                 Birthday = dto.Birthday.ToDateTime(new())
             };
         }
@@ -35,7 +36,7 @@ namespace PersonApi.Services.Mapping.v1
         {
             entity.FirstName = dto.FirstName;
             entity.SurName = dto.SurName;
-            entity.Gender = dto.Gender;
+            entity.Gender = (Helpers.Enums.v2.eGender)(int)dto.Gender;
             entity.Birthday = dto.Birthday.ToDateTime(new());
         }       
     }

@@ -20,6 +20,8 @@ All persons accessible through API version 1 have to be accessible through API v
 * authorization is not defined
 * SSL is not defined
 * async is not defined -> no async
+* not defined: howto handle people with gender diverse in v1
+* not defined: 
 
 ## Akzeptanzkriterien
 
@@ -27,3 +29,4 @@ All persons accessible through API version 1 have to be accessible through API v
 * controller has 2 versions
 * version 2 has additional properties
 * data is not limited by either version
+* v1 does not show (or crash) people with gender diverse 
