@@ -1,11 +1,10 @@
 ﻿
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace PersonApi.Helpers.Versioning;
+namespace PersonApi.Helpers.Swagger;
 
 public class ConfigureSwaggerOptions
      : IConfigureNamedOptions<SwaggerGenOptions>
@@ -25,7 +24,7 @@ public class ConfigureSwaggerOptions
             c.SwaggerDoc(
                 description.GroupName,
                 CreateInfoForApiVersion(description)
-            );       
+            );
         }
     }
 

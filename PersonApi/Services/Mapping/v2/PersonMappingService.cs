@@ -1,7 +1,7 @@
-﻿using PersonApi.DTOs.v1;
-using PersonApi.Models;
+﻿using PersonApi.Data.DTOs.v2;
+using PersonApi.Data.Models;
 
-namespace PersonApi.Helpers.Mapping.v1
+namespace PersonApi.Services.Mapping.v2
 {
     public class PersonMappingService : IMappingService<Person, PersonDto>
     {
@@ -12,7 +12,9 @@ namespace PersonApi.Helpers.Mapping.v1
                 person.FirstName,
                 person.SurName,
                 person.Gender,
-                person.Birthday
+                new DateOnly(person.Birthday.Year, person.Birthday.Month, person.Birthday.Day),
+                person.City,
+                person.Country
             );
         }
 
@@ -24,11 +26,23 @@ namespace PersonApi.Helpers.Mapping.v1
                 FirstName = dto.FirstName,
                 SurName = dto.SurName,
                 Gender = dto.Gender,
-                Birthday = dto.Birthday
+                Birthday = dto.Birthday.ToDateTime(new()),
+                City = dto.City,
+                Country = dto.Country
             };
         }
 
         public List<PersonDto> ToDto(IEnumerable<Person> people) => people.Select(i => ToDto(i)).ToList();
         public List<Person> ToEntity(IEnumerable<PersonDto> peopleDtos) => peopleDtos.Select(p => ToEntity(p)).ToList();
+
+        public void UpdateValues(in PersonDto dto, ref Person entity)
+        {
+            entity.FirstName = dto.FirstName;
+            entity.SurName = dto.SurName;
+            entity.Gender = dto.Gender;
+            entity.Birthday = dto.Birthday.ToDateTime(new());
+            entity.City = dto.City;
+            entity.Country = dto.Country;
+        }
     }
 }

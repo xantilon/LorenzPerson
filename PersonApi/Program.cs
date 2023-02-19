@@ -1,33 +1,37 @@
-
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using PersonApi.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+using PersonApi.Helpers.Swagger;
 using PersonApi.Helpers.Versioning;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Text.Json.Serialization;
+using MappingV1 = PersonApi.Services.Mapping.v1;
+using MappingV2 = PersonApi.Services.Mapping.v2;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<LorenzContext>(o=> new DbContextOptionsBuilder<LorenzContext>()
-    .UseInMemoryDatabase("LorenzDb")
-    .EnableSensitiveDataLogging(true)
-    .ConfigureWarnings(w => {
-        w.Ignore(InMemoryEventId.TransactionIgnoredWarning);
-    })
-    .LogTo(Console.WriteLine, LogLevel.Information)
-);
+builder.Services.AddDbContext<LorenzContext>();
 
+builder.Services.AddSingleton<MappingV1.PersonMappingService>();
+builder.Services.AddSingleton<MappingV2.PersonMappingService>();
 
-builder.Services.AddControllers();
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddTransient<IConfigureOptions<SwaggerUIOptions>, ConfigureSwaggerUIOptions>();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>  // show enums as text in swagger 
+    {
+        options.JsonSerializerOptions
+            .Converters
+            .Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.ConfigureApiVersioning();
-//builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 WebApplication app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

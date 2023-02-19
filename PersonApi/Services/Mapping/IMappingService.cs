@@ -1,6 +1,6 @@
-﻿using PersonApi.DTOs;
+﻿using PersonApi.Data.DTOs;
 
-namespace PersonApi.Helpers.Mapping
+namespace PersonApi.Services.Mapping
 {
     public interface IMappingService<E, D>
         where E : class, new()
@@ -12,6 +12,6 @@ namespace PersonApi.Helpers.Mapping
         List<D> ToDto(IEnumerable<E> es);
         List<E> ToEntity(IEnumerable<D> ds);
 
-        //void UpdateValues(in D dto, ref E entity);
+        void UpdateValues(in D dto, ref E entity);
     }
 }

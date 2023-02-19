@@ -1,6 +1,6 @@
 ﻿using PersonApi.Helpers.Enums;
 
-namespace PersonApi.Models
+namespace PersonApi.Data.Models
 {
     public class Person : BaseEntity
     {

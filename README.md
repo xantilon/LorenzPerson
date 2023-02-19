@@ -19,6 +19,7 @@ All persons accessible through API version 1 have to be accessible through API v
 * authentication is not defined -> no IdentityServer
 * authorization is not defined
 * SSL is not defined
+* async is not defined -> no async
 
 ## Akzeptanzkriterien
 

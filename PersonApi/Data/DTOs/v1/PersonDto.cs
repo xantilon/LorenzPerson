@@ -1,6 +1,6 @@
 ﻿using PersonApi.Helpers.Enums;
 
-namespace PersonApi.DTOs.v1
+namespace PersonApi.Data.DTOs.v1
 {
     /// <summary>
     /// this should be a useful documentation
@@ -14,5 +14,5 @@ namespace PersonApi.DTOs.v1
                             string FirstName,
                             string SurName,
                             eGender Gender,
-                            DateTime Birthday):BaseDto(Id);
+                            DateOnly Birthday) : BaseDto(Id);
 }
