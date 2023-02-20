@@ -13,7 +13,7 @@ All persons accessible through API version 1 have to be accessible through API v
 
 ## Abgrenzung
 
-* inmemory database
+* inmemory database -> no migrations possible
 * ORM not defined -> EF
 * versioning schema not defined -> URI & header
 * authentication is not defined -> no IdentityServer
@@ -21,7 +21,7 @@ All persons accessible through API version 1 have to be accessible through API v
 * SSL is not defined
 * async is not defined -> no async
 * not defined: howto handle people with gender diverse in v1
-* not defined: 
+* not defined: howto handle v1 updates on v2 data
 
 ## Akzeptanzkriterien
 
