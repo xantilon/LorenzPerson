@@ -30,3 +30,25 @@ All persons accessible through API version 1 have to be accessible through API v
 * version 2 has additional properties
 * data is not limited by either version
 * v1 does not show (or crash) people with gender diverse 
+
+## Umsetzung
+
+### Gender Erweiterung
+
+Mein Ansatz: 
+
+  Ausblenden der Diversen in v1. Diese sind nicht darstellbar
+
+Nachteile:
+  
+  * v1 kann die mit v2 angelegten sehen, und auch bearbeiten. Dabei werden aber die Zusatzfelder gelöscht! RISIKO hoch!
+  
+--- 
+
+mögliche Verbesserung: 
+
+  Erweiterung des Models mit Info welche Version erstellt hat. Anzeige und Bearbeitung darf dann nur von gleicher oder höherer Version erfolgen.
+  
+Nachteile:
+
+  wenn v2 einen Datensatz von v1 updated, wird er für v1 verschwinden 
