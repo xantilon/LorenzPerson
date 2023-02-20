@@ -51,14 +51,14 @@ namespace PersonApi.Controllers.v1
             Person? p = _db.People
                 .Where(p => p.Id == id)
                 .FirstOrDefault();
-
-            PersonDto? ret = null;
-            if(p is not null && p.CanDisplayInV1) 
-                ret = _personMapper.ToDto(p);
-
-            if (ret is null)
+                       
+            if (p is null)
                 return NotFound();
-            return Ok(ret);
+
+            if (!p.CanDisplayInV1)
+                return BadRequest("this data can only display in version >= 2 API");
+
+            return Ok(_personMapper.ToDto(p));
         }
 
         [HttpPost]
@@ -70,8 +70,10 @@ namespace PersonApi.Controllers.v1
             Person entity = _personMapper.ToEntity(person);
             entity.Id = 0;
             _db.People.Add(entity);
+
             if (_db.SaveChanges() > 0)
                 return Ok(_personMapper.ToDto(entity));
+            
             return BadRequest("person could not be created");
         }
 
@@ -84,9 +86,12 @@ namespace PersonApi.Controllers.v1
             Person? entity = _db.People
                 .FirstOrDefault(p => p.Id == person.Id);
 
-            if (entity is null || !entity.CanDisplayInV1)
+            if (entity is null)
                 return NotFound();
-            
+
+            if (!entity.CanDisplayInV1)
+                return BadRequest("this data can only update with version >= 2 API");
+
             _personMapper.UpdateValues(person, ref entity);
             
             if (_db.SaveChanges() > 0)
@@ -99,12 +104,17 @@ namespace PersonApi.Controllers.v1
         public ActionResult Delete(int id)
         {
             Person? entity = _db.People.FirstOrDefault(p => p.Id == id);
-            if (entity is null || !entity.CanDisplayInV1)
+            if (entity is null)
                 return NotFound();
 
+            if (!entity.CanDisplayInV1)
+                return BadRequest("this data can only delete with version >= 2 API");
+
             _db.People.Remove(entity);
+            
             if (_db.SaveChanges() > 0)
                 return NoContent();
+
             return BadRequest("person could not be deleted");
         }
     }

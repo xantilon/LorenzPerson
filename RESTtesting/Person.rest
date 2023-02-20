@@ -6,7 +6,6 @@
 GET {{url}}/people
 accept: application/json
 
-
 ###
 POST {{url}}/people
 Content-Type: application/json
@@ -20,6 +19,10 @@ Content-Type: application/json
     "country": "DC"
 }
 
+###
+GET {{url}}/people/11
+accept: application/json
+
 
 ###
 POST {{url}}/people
@@ -28,7 +31,7 @@ Content-Type: application/json
 {
     "firstName": "Clark",
     "surName": "Kent",
-    "gender": "diverse",
+    "gender": "male",
     "birthday": "1973-01-29",
     "city": "Smallville",
     "country": "DC"
@@ -48,7 +51,7 @@ Content-Type: application/json
 
 
 ### 
-DELETE {{url}}/people/13
+DELETE {{url}}/people/12
 accept: application/json
 
 
